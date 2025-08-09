@@ -1,33 +1,26 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
-import TripHistory from './trip_history.js'
 import UserReward from './user_reward.js'
 
-export default class User extends BaseModel {
+export default class Reward extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare email: string
+  declare titulo: string
 
   @column()
-  declare password: string
+  declare descripcion: string
 
   @column()
-  declare nombre: string
+  declare costo_puntos: number
 
   @column()
-  declare proveedor: string | null
+  declare activo: boolean
 
   @column()
-  declare proveedor_id: string | null
-
-  @column()
-  declare es_admin: boolean
-
-  @column()
-  declare puntos: number
+  declare imagen: string | null
 
   @column.dateTime({ autoCreate: true })
   declare creado_en: DateTime
@@ -35,9 +28,6 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare actualizado_en: DateTime
 
-  @hasMany(() => TripHistory, { foreignKey: 'usuario_id' })
-  declare tripHistories: HasMany<typeof TripHistory>
-
-  @hasMany(() => UserReward, { foreignKey: 'usuario_id' })
+  @hasMany(() => UserReward, { foreignKey: 'recompensa_id' })
   declare userRewards: HasMany<typeof UserReward>
 }
