@@ -1,6 +1,6 @@
 // app/Controllers/Http/UsersController.ts
 import { HttpContext } from '@adonisjs/core/http'
-import UserService from '../serivices/UserServices.js'
+import UserService from '../services/UserServices.js'
 
 export default class UsersController {
   public async index({ response }: HttpContext) {

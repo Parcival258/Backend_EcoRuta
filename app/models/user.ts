@@ -6,6 +6,7 @@ import UserReward from './user_reward.js'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
+import Routes from './routes.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -48,4 +49,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => UserReward, { foreignKey: 'usuario_id' })
   declare userRewards: HasMany<typeof UserReward>
+
+  @hasMany(()=> Routes, { foreignKey: 'usuario_id' })
+  declare routes: HasMany<typeof Routes>
 }

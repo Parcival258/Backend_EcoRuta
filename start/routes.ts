@@ -18,6 +18,7 @@ router.get('/', async () => {
 // recordar siempre importar
 const UsersController = () => import('../app/controllers/usuarios_controller.js')
 const AuthController = () => import('../app/controllers/AuthController.js')
+const RouteController = () => import('../app/controllers/RouteController.js')
 
 // crear usuarios (crud completo por si queda tiempo)
 router.post('/users', [UsersController, 'store'])
@@ -37,3 +38,8 @@ router.post('/auth/register', [AuthController, 'register'])
 router.post('/auth/logout', [AuthController, 'logout'])
 router.get('/auth/me', [AuthController, 'me'])
 router.put('/auth/change-password', [AuthController, 'changePassword'])
+
+//ruta routes
+router.get('/routes', [RouteController, 'getAll'])
+router.get('/routes/:id', [RouteController, 'getById'])
+router.post('/routes', [RouteController, 'create'])

@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
-import Route from './route.js'
+import Route from './routes.js'
 
 export default class TripHistory extends BaseModel {
   @column({ isPrimary: true })
