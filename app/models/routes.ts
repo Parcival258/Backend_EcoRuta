@@ -17,7 +17,7 @@ export default class Routes extends BaseModel {
   declare path: string
   @column()
   declare distancia_m: number
-  @column()
+  @column({columnName: 'co2_ahorrado_estimado'})
   declare co2_ahorrado_estimado: number
   @column()
   declare creado_por: number | null
