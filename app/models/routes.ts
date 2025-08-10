@@ -8,7 +8,7 @@ export default class Routes extends BaseModel {
   declare id: number
 
   @column()
-  declare nombre: number
+  declare nombre: string
   @column()
   declare descripcion: string
   @column()
@@ -20,7 +20,7 @@ export default class Routes extends BaseModel {
   @column()
   declare co2_ahorrado_estimado: number
   @column()
-  declare creado_por:string
+  declare creado_por: number | null
   @column()
   declare es_publica: boolean
   @column.dateTime({ autoCreate: true })
@@ -29,6 +29,6 @@ export default class Routes extends BaseModel {
     declare actualizado_en: DateTime
 
   @belongsTo(() => User, { foreignKey: 'creado_por' })
-  declare users: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
  
 }
