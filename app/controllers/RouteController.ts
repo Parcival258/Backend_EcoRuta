@@ -18,4 +18,15 @@ export default class RouteController {
         const route = await RouteServices.create(data)
         return response.created(route)
     }
+    
+    public async update({params, request, response}: HttpContext) {
+        const data = request.only(['nombre', 'descripcion', 'modo','path','distancia_m','co2_ahorrado_estimado','creado_por'])
+        const route = await RouteServices.update(params.id, data)
+        return response.ok(route)
+    }
+
+    public async delete({params, response}: HttpContext) {
+        await RouteServices.delete(params.id)
+        return response.noContent()
+    }
 }
