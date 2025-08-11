@@ -35,7 +35,7 @@ export default class AuthController {
     ])
 
     try {
-      // Verificar si el email ya existe
+      // si el email ya existe
       const existingUser = await User.findBy('email', email)
       if (existingUser) {
         return response.badRequest({ message: 'El email ya está registrado' })
@@ -72,7 +72,7 @@ export default class AuthController {
     }
   }
 
-  // Logout
+  // salir
   public async logout({ auth, response }: HttpContext) {
     try {
       await auth.use('web').logout()
@@ -105,7 +105,7 @@ export default class AuthController {
     }
   }
 
-  // Cambiar contraseña
+  // Cambiar contraseña (si queda tiempo)
   public async changePassword({ auth, request, response }: HttpContext) {
     const { password } = request.only(['password'])
     
@@ -115,8 +115,8 @@ export default class AuthController {
       if (!user) {
         return response.unauthorized({ message: 'No autenticado' })
       }
-      
-      user.password = password // El hash se hace automáticamente en el model
+      //hash para la contraseña
+      user.password = password
       await user.save()
       
       return response.ok({ message: 'Contraseña actualizada exitosamente' })

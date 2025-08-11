@@ -3,16 +3,16 @@ import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 
 export default class AuthService {
-  // Método para login
+  // login
   public static async login(email: string, password: string) {
-    // Buscar usuario por email
+    // Buscar usuario email
     const user = await User.findBy('email', email)
     
     if (!user) {
       throw new Error('Usuario no encontrado')
     }
 
-    // Verificar contraseña
+    //contraseña
     const isValidPassword = await hash.verify(user.password, password)
     
     if (!isValidPassword) {
@@ -22,7 +22,7 @@ export default class AuthService {
     return user
   }
 
-  // Método para registro con hash de contraseña
+  // hash de contraseña
   public static async register(data: {
     nombre: string
     email: string
@@ -40,7 +40,7 @@ export default class AuthService {
     // Hash de la contraseña
     const hashedPassword = await hash.make(data.password)
 
-    // Crear usuario con contraseña hasheada
+    //usuario con contraseña hash
     const user = await User.create({
       ...data,
       password: hashedPassword,

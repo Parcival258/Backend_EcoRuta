@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 
 router.get('/', async () => {
   return {
@@ -19,17 +20,15 @@ router.get('/', async () => {
 const UsersController = () => import('../app/controllers/usuarios_controller.js')
 const AuthController = () => import('../app/controllers/AuthController.js')
 const RouteController = () => import('../app/controllers/RouteController.js')
+const TripHistoriesController = () => import('#controllers/TripHistoriesController')
 
 // crear usuarios (crud completo por si queda tiempo)
 router.post('/users', [UsersController, 'store'])
 
 // Listar usuarios
 router.get('/users', [UsersController, 'index'])
-// Ver un usuario
 router.get('/users/:id', [UsersController, 'show']) 
-// Actualizar usuario
 router.put('/users/:id', [UsersController, 'update']) 
- // Eliminar usuario
 router.delete('/users/:id', [UsersController, 'destroy'])
 
 //para la autenticacion
@@ -45,3 +44,16 @@ router.get('/routes/:id', [RouteController, 'getById'])
 router.post('/routes', [RouteController, 'create'])
 router.put('/routes/:id', [RouteController, 'update'])
 router.delete('/routes/:id', [RouteController, 'delete'])
+
+//rutas para historial
+router
+  .group(() => {
+    router.get('/', [TripHistoriesController, 'index'])
+    router.get('/:id', [TripHistoriesController, 'show'])
+    router.post('/', [TripHistoriesController, 'store'])
+    router.put('/:id', [TripHistoriesController, 'update'])
+    router.delete('/:id', [TripHistoriesController, 'destroy'])
+  })
+  .prefix('trip-histories')
+  //middleware es una funcion, no se por que y tica descativarlo mientrastanto
+.use(middleware.auth())
