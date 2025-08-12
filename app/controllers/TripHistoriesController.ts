@@ -2,17 +2,26 @@ import type { HttpContext } from '@adonisjs/core/http'
 import TripHistoriesService from '#services/TripHistoriesService'
 
 export default class TripHistoriesController {
-  async index({ auth }: HttpContext) {
-    return TripHistoriesService.listByUser(auth.user!.id)
+  async index(ctx: HttpContext) {
+    // El usuario viene del middleware JWT
+    const user = (ctx as any).jwtUser
+    return TripHistoriesService.listByUser(user.id)
   }
 
-  async show({ params, auth, response }: HttpContext) {
-    const trip = await TripHistoriesService.findById(auth.user!.id, params.id)
+  async show(ctx: HttpContext) {
+    const { params, response } = ctx
+    // El usuario viene del middleware JWT
+    const user = (ctx as any).jwtUser
+    const trip = await TripHistoriesService.findById(user.id, params.id)
     if (!trip) return response.notFound({ message: 'Viaje no encontrado' })
     return trip
   }
 
-  async store({ request, auth, response }: HttpContext) {
+  async store(ctx: HttpContext) {
+    const { request, response } = ctx
+    // El usuario viene del middleware JWT
+    const user = (ctx as any).jwtUser
+    
     const data = request.only([
       'ruta_id',
       'modo',
@@ -27,10 +36,14 @@ export default class TripHistoriesController {
       return response.badRequest({ message: 'Faltan campos obligatorios: modo, iniciado_en' })
     }
 
-    return TripHistoriesService.create(auth.user!.id, data)
+    return TripHistoriesService.create(user.id, data)
   }
 
-  async update({ params, request, auth, response }: HttpContext) {
+  async update(ctx: HttpContext) {
+    const { params, request, response } = ctx
+    // El usuario viene del middleware JWT
+    const user = (ctx as any).jwtUser
+    
     const data = request.only([
       'ruta_id',
       'modo',
@@ -41,13 +54,16 @@ export default class TripHistoriesController {
       'path_registrado',
     ])
 
-    const trip = await TripHistoriesService.update(auth.user!.id, params.id, data)
+    const trip = await TripHistoriesService.update(user.id, params.id, data)
     if (!trip) return response.notFound({ message: 'Viaje no encontrado' })
     return trip
   }
 
-  async destroy({ params, auth, response }: HttpContext) {
-    const deleted = await TripHistoriesService.delete(auth.user!.id, params.id)
+  async destroy(ctx: HttpContext) {
+    const { params, response } = ctx
+    // El usuario viene del middleware JWT
+    const user = (ctx as any).jwtUser
+    const deleted = await TripHistoriesService.delete(user.id, params.id)
     if (!deleted) return response.notFound({ message: 'Viaje no encontrado' })
     return { message: 'Viaje eliminado' }
   }

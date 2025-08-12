@@ -35,8 +35,10 @@ router.delete('/users/:id', [UsersController, 'destroy'])
 router.post('/auth/login', [AuthController, 'login'])
 router.post('/auth/register', [AuthController, 'register'])
 router.post('/auth/logout', [AuthController, 'logout'])
-router.get('/auth/me', [AuthController, 'me'])
-router.put('/auth/change-password', [AuthController, 'changePassword'])
+
+// Rutas protegidas con JWT
+router.get('/auth/me', [AuthController, 'me']).use(middleware.jwtAuth())
+router.put('/auth/change-password', [AuthController, 'changePassword']).use(middleware.jwtAuth())
 
 //ruta routes
 router.get('/routes', [RouteController, 'getAll'])
@@ -45,7 +47,7 @@ router.post('/routes', [RouteController, 'create'])
 router.put('/routes/:id', [RouteController, 'update'])
 router.delete('/routes/:id', [RouteController, 'delete'])
 
-//rutas para historial
+//rutas para historial (protegidas con JWT)
 router
   .group(() => {
     router.get('/', [TripHistoriesController, 'index'])
@@ -55,5 +57,4 @@ router
     router.delete('/:id', [TripHistoriesController, 'destroy'])
   })
   .prefix('trip-histories')
-  //middleware es una funcion, no se por que y tica descativarlo mientrastanto
-.use(middleware.auth())
+  .use(middleware.jwtAuth())

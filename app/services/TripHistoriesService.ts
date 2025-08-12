@@ -7,7 +7,7 @@ export default class TripHistoriesService {
       .preload('route')
       .orderBy('iniciado_en', 'desc')
   }
-
+  //esta fue de chat
   static async findById(userId: number, id: number) {
     return TripHistory.query()
       .where('usuario_id', userId)
