@@ -21,6 +21,8 @@ const UsersController = () => import('../app/controllers/usuarios_controller.js'
 const AuthController = () => import('../app/controllers/AuthController.js')
 const RouteController = () => import('../app/controllers/RouteController.js')
 const TripHistoriesController = () => import('#controllers/TripHistoriesController')
+const RewardController = () => import('../app/controllers/RewardController.js')
+const UserRewardsController = () => import('../app/controllers/UserRewardController.js')
 
 // crear usuarios (crud completo por si queda tiempo)
 router.post('/users', [UsersController, 'store'])
@@ -58,3 +60,16 @@ router
   })
   .prefix('trip-histories')
   .use(middleware.jwtAuth())
+
+
+router.get('/rewards', [RewardController, 'getAll'])
+router.get('/rewards/:id', [RewardController, 'getById'])
+router.post('/rewards', [RewardController, 'create'])
+router.put('/rewards/:id', [RewardController, 'update'])
+router.delete('/rewards/:id', [RewardController, 'delete'])
+
+router.get('/user-rewards', [UserRewardsController, 'getAll'])
+router.get('/user-rewards/:id', [UserRewardsController, 'getById'])
+router.post('/user-rewards', [UserRewardsController, 'create'])
+router.put('/user-rewards/:id', [UserRewardsController, 'update'])
+router.delete('/user-rewards/:id', [UserRewardsController, 'delete'])

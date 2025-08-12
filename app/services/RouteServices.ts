@@ -17,17 +17,17 @@ export default class RouteServices {
 
     //actualizar un usuario
     public static async update(id: number, data: Partial<Route>) {
-        const user = await Route.findOrFail(id)
-        user.merge(data)
-        await user.save()
-        return user
+        const ruta = await Route.findOrFail(id)
+        ruta.merge(data)
+        await ruta.save()
+        return ruta
     }
 
     //eliminar un usuario
     public static async delete(id: number) {
-        const user = await Route.findOrFail(id)
-        await user.delete()
-        return user
+        const ruta = await Route.findOrFail(id)
+        await ruta.delete()
+        return ruta
     }
 
 }
