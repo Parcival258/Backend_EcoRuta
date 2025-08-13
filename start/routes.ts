@@ -32,6 +32,7 @@ router.get('/users', [UsersController, 'index'])
 router.get('/users/:id', [UsersController, 'show']) 
 router.put('/users/:id', [UsersController, 'update']) 
 router.delete('/users/:id', [UsersController, 'destroy'])
+router.patch('/users/:id', [UsersController, 'update']) 
 
 //para la autenticacion
 router.post('/auth/login', [AuthController, 'login'])

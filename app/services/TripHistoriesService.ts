@@ -19,7 +19,7 @@ export default class TripHistoriesService {
   static async create(userId: number, data: any) {
     return TripHistory.create({
       ...data,
-      usuarioId: userId,
+      usuario_id: userId,
     })
   }
 

@@ -20,7 +20,7 @@ export default class UsersController {
   }
 
   public async update({ params, request, response }: HttpContext) {
-    const data = request.only(['nombre', 'email', 'password'])
+    const data = request.only(['nombre', 'email', 'password','es_admin','puntos'])
     const user = await UserService.update(params.id, data)
     return response.ok(user)
   }

@@ -26,7 +26,7 @@ export default class TripHistory extends BaseModel {
   @column()
   declare distancia_m: number | null
 
-  @column()
+  @column({columnName: 'co2_ahorrado_g'})
   declare co2_ahorrado_g: number | null
 
   @column()
